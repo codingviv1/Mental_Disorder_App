@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mental Health Assessment System</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet">
+</head>
+<body>
+    <!-- Theme Toggle -->
+    <button class="theme-toggle no-print" id="themeToggle">
+        <i class="fas fa-moon"></i>
+    </button>
+
+    <!-- Progress Bar -->
+    <div class="progress-container no-print">
+        <div class="progress-bar" id="formProgress"></div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div class="loading">
+        <div class="loading-spinner"></div>
+    </div>
+
+    <div class="container mt-5">
+        <div class="header">
+            <h1><i class="fas fa-brain me-2"></i>Mental Health Assessment System</h1>
+            <p class="lead">A comprehensive tool for mental health evaluation and disorder prediction</p>
+        </div>
+        
+        <form id="predictionForm" class="needs-validation" novalidate>
+            <!-- Basic Information Section -->
+            <div class="section">
+                <h3 class="section-title">
+                    <i class="fas fa-user me-2"></i>Basic Information
+                    <span class="tooltip">
+                        <i class="fas fa-info-circle ms-2"></i>
+                        <span class="tooltip-text">Please provide accurate personal information for better assessment results.</span>
+                    </span>
+                </h3>
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <label for="age" class="form-label">Age</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fas fa-birthday-cake"></i></span>
+                            <input type="number" class="form-control" id="age" name="age" required>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label for="gender" class="form-label">Gender</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fas fa-venus-mars"></i></span>
+                            <select class="form-select" id="gender" name="gender" required>
+                                <option value="">Select gender</option>
+                                <option value="M">Male</option>
+                                <option value="F">Female</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label for="marital_status" class="form-label">Marital Status</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fas fa-ring"></i></span>
+                            <select class="form-select" id="marital_status" name="marital_status" required>
+                                <option value="">Select status</option>
+                                <option value="married">Married</option>
+                                <option value="unmarried">Unmarried</option>
+                                <option value="no_information">No Information</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <label for="occupation" class="form-label">Occupation</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fas fa-briefcase"></i></span>
+                            <select class="form-select" id="occupation" name="occupation" required>
+                                <option value="">Select occupation</option>
+                                <option value="business">Business</option>
+                                <option value="farmer">Farmer</option>
+                                <option value="housewife">Housewife</option>
+                                <option value="labor_service">Labor/Service</option>
+                                <option value="none">None</option>
+                                <option value="other">Other</option>
+                                <option value="student">Student</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label for="education" class="form-label">Education</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fas fa-graduation-cap"></i></span>
+                            <select class="form-select" id="education" name="education" required>
+                                <option value="">Select education</option>
+                                <option value="1-8th">1-8th</option>
+                                <option value="9-12th">9-12th</option>
+                                <option value="graduate">Graduate</option>
+                                <option value="illiterate">Illiterate</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label for="address" class="form-label">Address</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fas fa-map-marker-alt"></i></span>
+                            <input type="text" class="form-control" id="address" name="address" required>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Symptoms Section -->
+            <div class="section">
+                <h3 class="section-title"><i class="fas fa-heartbeat me-2"></i>Symptoms</h3>
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <label for="diet" class="form-label">Diet</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fas fa-utensils"></i></span>
+                            <select class="form-select" id="diet" name="diet" required>
+                                <option value="">Select</option>
+                                <option value="yes">Yes</option>
+                                <option value="no">No</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label for="abnormal_behaviour" class="form-label">Abnormal Behaviour</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fas fa-exclamation-triangle"></i></span>
+                            <select class="form-select" id="abnormal_behaviour" name="abnormal_behaviour" required>
+                                <option value="">Select</option>
+                                <option value="yes">Yes</option>
+                                <option value="no">No</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label for="anxiety" class="form-label">Anxiety</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fas fa-wind"></i></span>
+                            <select class="form-select" id="anxiety" name="anxiety" required>
+                                <option value="">Select</option>
+                                <option value="yes">Yes</option>
+                                <option value="no">No</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <label for="appetite" class="form-label">Appetite</label>
+                        <select class="form-select" id="appetite" name="appetite" required>
+                            <option value="">Select</option>
+                            <option value="yes">Yes</option>
+                            <option value="no">No</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label for="body_pain" class="form-label">Body Pain</label>
+                        <select class="form-select" id="body_pain" name="body_pain" required>
+                            <option value="">Select</option>
+                            <option value="yes">Yes</option>
+                            <option value="no">No</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label for="crying" class="form-label">Crying</label>
+                        <select class="form-select" id="crying" name="crying" required>
+                            <option value="">Select</option>
+                            <option value="yes">Yes</option>
+                            <option value="no">No</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Additional Symptoms Section -->
+            <div class="section">
+                <h3 class="section-title"><i class="fas fa-plus-circle me-2"></i>Additional Symptoms</h3>
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <label for="irrelevant_talks" class="form-label">Irrelevant Talks</label>
+                        <select class="form-select" id="irrelevant_talks" name="irrelevant_talks" required>
+                            <option value="">Select</option>
+                            <option value="yes">Yes</option>
+                            <option value="no">No</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label for="fatiguability" class="form-label">Fatiguability</label>
+                        <select class="form-select" id="fatiguability" name="fatiguability" required>
+                            <option value="">Select</option>
+                            <option value="yes">Yes</option>
+                            <option value="no">No</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label for="generalized_weakness" class="form-label">Generalized Weakness</label>
+                        <select class="form-select" id="generalized_weakness" name="generalized_weakness" required>
+                            <option value="">Select</option>
+                            <option value="yes">Yes</option>
+                            <option value="no">No</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <label for="hallucination" class="form-label">Hallucination</label>
+                        <select class="form-select" id="hallucination" name="hallucination" required>
+                            <option value="">Select</option>
+                            <option value="yes">Yes</option>
+                            <option value="no">No</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label for="headache" class="form-label">Headache</label>
+                        <select class="form-select" id="headache" name="headache" required>
+                            <option value="">Select</option>
+                            <option value="yes">Yes</option>
+                            <option value="no">No</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label for="abnormal_body_movements" class="form-label">Abnormal Body Movements</label>
+                        <select class="form-select" id="abnormal_body_movements" name="abnormal_body_movements" required>
+                            <option value="">Select</option>
+                            <option value="yes">Yes</option>
+                            <option value="no">No</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mental Health Indicators Section -->
+            <div class="section">
+                <h3 class="section-title"><i class="fas fa-brain me-2"></i>Mental Health Indicators</h3>
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <label for="less_sleep" class="form-label">Less Sleep</label>
+                        <select class="form-select" id="less_sleep" name="less_sleep" required>
+                            <option value="">Select</option>
+                            <option value="yes">Yes</option>
+                            <option value="no">No</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label for="low_mood" class="form-label">Low Mood</label>
+                        <select class="form-select" id="low_mood" name="low_mood" required>
+                            <option value="">Select</option>
+                            <option value="yes">Yes</option>
+                            <option value="no">No</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label for="menstrual_problems" class="form-label">Menstrual Problems</label>
+                        <select class="form-select" id="menstrual_problems" name="menstrual_problems" required>
+                            <option value="">Select</option>
+                            <option value="yes">Yes</option>
+                            <option value="no">No</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <label for="others" class="form-label">Others</label>
+                        <select class="form-select" id="others" name="others" required>
+                            <option value="">Select</option>
+                            <option value="yes">Yes</option>
+                            <option value="no">No</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label for="palpitation" class="form-label">Palpitation</label>
+                        <select class="form-select" id="palpitation" name="palpitation" required>
+                            <option value="">Select</option>
+                            <option value="yes">Yes</option>
+                            <option value="no">No</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label for="phobia" class="form-label">Phobia</label>
+                        <select class="form-select" id="phobia" name="phobia" required>
+                            <option value="">Select</option>
+                            <option value="yes">Yes</option>
+                            <option value="no">No</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Risk Factors Section -->
+            <div class="section">
+                <h3 class="section-title"><i class="fas fa-exclamation-circle me-2"></i>Risk Factors</h3>
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <label for="substance_use" class="form-label">Substance Use</label>
+                        <select class="form-select" id="substance_use" name="substance_use" required>
+                            <option value="">Select</option>
+                            <option value="yes">Yes</option>
+                            <option value="no">No</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label for="suicidal_ideation" class="form-label">Suicidal Ideation</label>
+                        <select class="form-select" id="suicidal_ideation" name="suicidal_ideation" required>
+                            <option value="">Select</option>
+                            <option value="yes">Yes</option>
+                            <option value="no">No</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label for="previous_illness_encoded" class="form-label">Previous Illness</label>
+                        <select class="form-select" id="previous_illness_encoded" name="previous_illness_encoded" required>
+                            <option value="">Select</option>
+                            <option value="yes">Yes</option>
+                            <option value="no">No</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <label for="family_history_encoded" class="form-label">Family History</label>
+                        <select class="form-select" id="family_history_encoded" name="family_history_encoded" required>
+                            <option value="">Select</option>
+                            <option value="yes">Yes</option>
+                            <option value="no">No</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label for="physical_examination_encoded" class="form-label">Physical Examination</label>
+                        <select class="form-select" id="physical_examination_encoded" name="physical_examination_encoded" required>
+                            <option value="">Select</option>
+                            <option value="yes">Yes</option>
+                            <option value="no">No</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Lab Tests Section -->
+            <div class="section">
+                <h3 class="section-title"><i class="fas fa-flask me-2"></i>Lab Tests</h3>
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <label for="lab_test_cbc" class="form-label">CBC</label>
+                        <select class="form-select" id="lab_test_cbc" name="lab_test_cbc" required>
+                            <option value="">Select</option>
+                            <option value="yes">Yes</option>
+                            <option value="no">No</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label for="lft" class="form-label">LFT</label>
+                        <select class="form-select" id="lft" name="lft" required>
+                            <option value="">Select</option>
+                            <option value="yes">Yes</option>
+                            <option value="no">No</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label for="kft" class="form-label">KFT</label>
+                        <select class="form-select" id="kft" name="kft" required>
+                            <option value="">Select</option>
+                            <option value="yes">Yes</option>
+                            <option value="no">No</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <label for="ecg" class="form-label">ECG</label>
+                        <select class="form-select" id="ecg" name="ecg" required>
+                            <option value="">Select</option>
+                            <option value="yes">Yes</option>
+                            <option value="no">No</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label for="urine_r_m" class="form-label">Urine R/M</label>
+                        <select class="form-select" id="urine_r_m" name="urine_r_m" required>
+                            <option value="">Select</option>
+                            <option value="yes">Yes</option>
+                            <option value="no">No</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label for="lab_report_encoded" class="form-label">Lab Report</label>
+                        <select class="form-select" id="lab_report_encoded" name="lab_report_encoded" required>
+                            <option value="">Select</option>
+                            <option value="yes">Yes</option>
+                            <option value="no">No</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Blood Pressure Section -->
+            <div class="section">
+                <h3 class="section-title"><i class="fas fa-heartbeat me-2"></i>Blood Pressure Status</h3>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="bp_status" class="form-label">Blood Pressure Status</label>
+                        <select class="form-select" id="bp_status" name="bp_status" required>
+                            <option value="">Select</option>
+                            <option value="BP_Elevated">Elevated</option>
+                            <option value="BP_Healthy">Healthy</option>
+                            <option value="BP_Stage_1_Hypertension">Stage 1 Hypertension</option>
+                            <option value="BP_Stage_2_Hypertension">Stage 2 Hypertension</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center mb-4">
+                <button type="submit" class="btn btn-primary btn-lg">
+                    <i class="fas fa-search me-2"></i>Analyze
+                </button>
+                <button type="button" class="btn btn-secondary btn-lg ms-2 no-print" onclick="window.print()">
+                    <i class="fas fa-print me-2"></i>Print Results
+                </button>
+            </div>
+        </form>
+
+        <div id="result" class="mt-4" style="display: none;">
+            <div class="alert alert-info">
+                <h4 class="alert-heading">
+                    <i class="fas fa-chart-pie me-2"></i>Analysis Results
+                    <button class="btn btn-sm btn-light float-end no-print" onclick="window.print()">
+                        <i class="fas fa-print"></i>
+                    </button>
+                </h4>
+                <p id="predictionText"></p>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Theme Toggle
+        const themeToggle = document.getElementById('themeToggle');
+        const icon = themeToggle.querySelector('i');
+        
+        // Check for saved theme preference
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme) {
+            document.body.setAttribute('data-theme', savedTheme);
+            icon.className = savedTheme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+        }
+
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = document.body.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            
+            document.body.setAttribute('data-theme', newTheme);
+            icon.className = newTheme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+            localStorage.setItem('theme', newTheme);
+        });
+
+        // Form Progress
+        const form = document.getElementById('predictionForm');
+        const progressBar = document.getElementById('formProgress');
+        const totalFields = form.querySelectorAll('input, select').length;
+        let filledFields = 0;
+
+        function updateProgress() {
+            filledFields = Array.from(form.querySelectorAll('input, select')).filter(field => field.value).length;
+            const progress = (filledFields / totalFields) * 100;
+            progressBar.style.width = `${progress}%`;
+        }
+
+        form.querySelectorAll('input, select').forEach(field => {
+            field.addEventListener('input', updateProgress);
+            field.addEventListener('change', updateProgress);
+        });
+
+        // Form Validation
+        function validateField(field) {
+            if (field.required && !field.value) {
+                field.classList.add('is-invalid');
+                field.classList.remove('is-valid');
+            } else {
+                field.classList.remove('is-invalid');
+                field.classList.add('is-valid');
+            }
+        }
+
+        form.querySelectorAll('input, select').forEach(field => {
+            field.addEventListener('blur', () => validateField(field));
+        });
+
+        // Show loading overlay
+        function showLoading() {
+            document.querySelector('.loading').style.display = 'flex';
+        }
+
+        // Hide loading overlay
+        function hideLoading() {
+            document.querySelector('.loading').style.display = 'none';
+        }
+
+        // Form submission with loading animation
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            // Validate all fields
+            let isValid = true;
+            form.querySelectorAll('input, select').forEach(field => {
+                validateField(field);
+                if (field.classList.contains('is-invalid')) {
+                    isValid = false;
+                }
+            });
+
+            if (!isValid) {
+                return;
+            }
+
+            showLoading();
+            
+            const formData = new FormData(e.target);
+            const data = Object.fromEntries(formData.entries());
+            
+            try {
+                const response = await fetch('/predict', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: new URLSearchParams(data)
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    const prediction = result.prediction;
+                    document.getElementById('predictionText').innerHTML = `
+                        <strong>Predicted Disorder:</strong> ${prediction.prediction}<br>
+                        <strong>Probabilities:</strong><br>
+                        ${Object.entries(prediction.probabilities)
+                            .map(([disorder, prob]) => `${disorder}: ${(prob * 100).toFixed(2)}%`)
+                            .join('<br>')}
+                    `;
+                    document.getElementById('result').style.display = 'block';
+                    
+                    // Scroll to results
+                    document.getElementById('result').scrollIntoView({ behavior: 'smooth' });
+                } else {
+                    alert('Error: ' + result.error);
+                }
+            } catch (error) {
+                alert('Error: ' + error.message);
+            } finally {
+                hideLoading();
+            }
+        });
+
+        // Add smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Initialize tooltips
+        const tooltips = document.querySelectorAll('.tooltip');
+        tooltips.forEach(tooltip => {
+            const text = tooltip.querySelector('.tooltip-text');
+            tooltip.addEventListener('mouseenter', () => {
+                text.style.visibility = 'visible';
+                text.style.opacity = '1';
+            });
+            tooltip.addEventListener('mouseleave', () => {
+                text.style.visibility = 'hidden';
+                text.style.opacity = '0';
+            });
+        });
+    </script>
+</body>
+</html> 
