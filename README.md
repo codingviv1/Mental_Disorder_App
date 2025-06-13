@@ -2,6 +2,10 @@
 
 A comprehensive web application for mental health evaluation and disorder prediction using machine learning.
 
+## Live Demo
+
+The application is deployed and can be accessed at: [Mental Health Assessment System](https://mental-health-assessment.onrender.com)
+
 ## Features
 
 - Modern and responsive user interface
