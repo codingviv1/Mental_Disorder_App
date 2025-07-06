@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About - Mental Health Assessment System</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet">
+    <style>
+        .about-container {
+            max-width: 800px;
+            margin: 60px auto 0 auto;
+            background: var(--section-bg);
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            padding: 2.5rem 2rem;
+        }
+        .about-title {
+            font-size: 2.2rem;
+            font-weight: 600;
+            margin-bottom: 1.2rem;
+            color: var(--primary-color);
+        }
+        .param-list {
+            margin-top: 2rem;
+        }
+        .param-list li {
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+    </style>
+</head>
+<body>
+    <button class="hamburger" id="hamburgerBtn" aria-label="Open navigation">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+    <nav class="side-nav" id="sideNav">
+        <span class="close-btn" id="closeNav">&times;</span>
+        <a href="/home">Home</a>
+        <a href="/about">About</a>
+        <a href="/test">Test</a>
+        <a href="/contact">Contact Us</a>
+    </nav>
+    <div class="about-container">
+        <div class="about-title"><i class="fas fa-info-circle me-2"></i>About This App</div>
+        <p>This application evaluates mental health by analyzing a variety of personal, behavioral, and medical parameters. Below are the key parameters considered in the assessment:</p>
+        <ul class="param-list">
+            <li><strong>Age, Gender, Address</strong>: Basic demographic information.</li>
+            <li><strong>Occupation, Education, Marital Status</strong>: Socioeconomic and lifestyle factors.</li>
+            <li><strong>Diet</strong>: Dietary habits (Yes/No).</li>
+            <li><strong>Symptoms</strong>: Abnormal behaviour, anxiety, appetite, body pain, crying, irrelevant talks, fatiguability, generalized weakness, hallucination, headache, abnormal body movements, less sleep, low mood, menstrual problems, others, palpitation, phobia, substance use, suicidal ideation (all Yes/No).</li>
+            <li><strong>Medical History</strong>: Previous illness, family history, physical examination (all Yes/No).</li>
+            <li><strong>Lab Tests</strong>: CBC, LFT, KFT, ECG, Urine R/M, Lab report (all Yes/No).</li>
+            <li><strong>Blood Pressure Status</strong>: BP Elevated, BP Healthy, BP Stage 1 Hypertension, BP Stage 2 Hypertension.</li>
+        </ul>
+        <p>Each of these parameters helps in building a comprehensive profile for accurate mental health assessment and disorder prediction.</p>
+    </div>
+    <script>
+        const hamburgerBtn = document.getElementById('hamburgerBtn');
+        const sideNav = document.getElementById('sideNav');
+        const closeNav = document.getElementById('closeNav');
+        hamburgerBtn.onclick = () => sideNav.classList.add('open');
+        closeNav.onclick = () => sideNav.classList.remove('open');
+        window.onclick = function(event) {
+            if (event.target === sideNav) {
+                sideNav.classList.remove('open');
+            }
+        };
+    </script>
+</body>
+</html> 
